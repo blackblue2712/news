@@ -1,0 +1,38 @@
+{
+  "name": "News",
+  "short_name": "news",
+  "theme_color": "#00bfff",
+  "background_color": "#f7f9fa",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/icon/news.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/icon/news.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "/icon/news.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/icon/news.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon/news.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ]
+}
