@@ -10,7 +10,7 @@ namespace sc {
     min-width: 100vw;
     max-width: 100vw;
     height: 100%;
-    background-color: ${solitudeLight};
+    /* background-color: ${solitudeLight}; */
   `;
 }
 

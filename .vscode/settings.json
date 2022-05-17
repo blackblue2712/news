@@ -1,0 +1,14 @@
+{
+  "files.associations": {
+    "*.svg": "html"
+  },
+  "editor.codeActionsOnSave": {
+    // For ESLint
+    "source.fixAll.eslint": true
+  },
+  "editor.tabSize": 2,
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.referencesCodeLens.enabled": true,
+  "cSpell.words": ["autorun", "deactive", "Leaderboard", "mockoptions"]
+}

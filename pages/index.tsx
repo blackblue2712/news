@@ -4,18 +4,33 @@ import { TheNavbarTop } from 'components/TheNavbarTop/TheNavbarTop'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useMemo } from 'react'
 import { RootStore, useRootStore } from 'stores/RootStore'
-import styles from '../styles/Home.module.css'
+import { Feed } from '../src/components/Feed/Feed'
+import { isBrowser } from '../src/shared/helpers/isBrowser'
+import { IFeed } from '../src/shared/models/Feed'
 
 interface IHomePageProps {
   isServerRender: boolean;
-  feeds: Array<any>
+  feed: Array<IFeed>
 }
 
 const Home: NextPage<IHomePageProps> = (props) => {
+  const rootStore = useRootStore();
+
+  useMemo(() => {
+    (async () => {
+      if (props.isServerRender) {
+        rootStore.hydrate(props.feed);
+      }
+
+      isBrowser() && await rootStore.fetchFeeds();
+    })();
+  }, []);
+
   return (
     <PageLayout
-      renderContent={() => <></>}
+      renderContent={() => <Feed driver={rootStore.feed} />}
       renderHeader={() => <TheNavbarTop />}
       renderFooter={() => <TheFooter />}
     />
@@ -23,14 +38,13 @@ const Home: NextPage<IHomePageProps> = (props) => {
 }
 
 export async function getServerSideProps(context) {
-  const { newsApi } = new RootStore();
-
-  const feeds = await newsApi.getNews();
+  const rootStore = new RootStore();
+  await rootStore.fetchFeeds();
 
   return {
     props: {
       isServerRender: true,
-      feeds: feeds,
+      feed: rootStore.dehydrate(),
     }
   }
 }
