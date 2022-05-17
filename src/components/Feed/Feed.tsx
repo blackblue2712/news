@@ -30,7 +30,7 @@ export const Feed = observer((props: IProps) => {
 
                         <sc.Title>{item.title}</sc.Title>
                         <sc.Description>
-                            {item.description}
+                            {item.description || 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus, iure?'}
                         </sc.Description>
                         <sc.Info>
                             <sc.Date>May 16</sc.Date> |

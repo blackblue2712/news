@@ -6,6 +6,7 @@ import React from "react"
 import { NewsApi } from '../shared/apis/NewsApi';
 import { IFeed } from "../shared/models/Feed";
 import { FeedModel } from "./FeedModel";
+import { MetaData, MetaStore } from "./MetaStore";
 
 
 configure({
@@ -14,30 +15,62 @@ configure({
 });
 enableStaticRendering(typeof window === "undefined");
 
-export type RootData = Array<IFeed>;
+export type RootData = {
+  feedDetail: IFeed | null,
+  metaData: MetaData;
+}
 
 export class RootStore {
   isHydrated: boolean = false;
   @observable feed: IObservableArray<FeedModel> = observable<FeedModel>([]);
+  @observable feedDetail: FeedModel | null = null;
+  @observable isLoading: boolean = false;
 
   public newsApi: NewsApi;
+  public metaStore: MetaStore;
 
   constructor() {
     makeObservable(this);
+
     this.newsApi = new NewsApi();
+    this.metaStore = new MetaStore();
   }
 
   dehydrate(): RootData {
-    return this.feed.map(item => item.toJSON())
+    return { feedDetail: this.feedDetail?.toJSON() || null, metaData: this.metaStore.dehydrate(), };
   }
   @action.bound hydrate(data: RootData): void {
-    console.log(data);
-    this.feed.replace(data.map(item => new FeedModel(item)));
+    this.metaStore.hydrate(data.metaData);
+    if (data.feedDetail) {
+      this.feedDetail = new FeedModel(data.feedDetail);
+    }
+
   }
   @action.bound fetchFeeds = flow(function* (this: RootStore) {
-    const res = yield this.newsApi.getNews();
+    try {
+      this.isLoading = true;
 
-    this.feed.replace(res.map(item => new FeedModel(item)));
+      const res = yield this.newsApi.getNews();
+
+      this.feed.replace(res.map(item => new FeedModel(item)));
+    } finally {
+      this.isLoading = false;
+    }
+  });
+
+  @action.bound fetchFeedDetail = flow(function* (this: RootStore, id: string) {
+    try {
+      this.isLoading = true;
+
+      const res = yield this.newsApi.getNewDetail(id);
+      this.feedDetail = new FeedModel(res);
+
+      if (res.metaTags) {
+        this.metaStore.updateMetaTags(res.metaTags);
+      }
+    } finally {
+      this.isLoading = false;
+    }
   });
 
 }

@@ -3,7 +3,8 @@ import { black, blue, brightLightBlue, gray, licoriceBlue, nevadaGrey, white } f
 
 namespace sc {
     export const Container = styled.div`
-
+        min-height: calc(100vh - 64px - 48px);
+        margin-top: 48px;
     `;
     export const FeedItem = styled.a`
         display: flex;
@@ -59,7 +60,7 @@ namespace sc {
     export const Title = styled.div`
         font-weight: 700;
         font-size: 22px;
-        line-height: 22px;
+        line-height: 24px;
         letter-spacing: 0;
 
         display: -webkit-box;

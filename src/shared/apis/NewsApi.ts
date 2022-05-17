@@ -1,12 +1,17 @@
 import axios from "axios";
 import { getApiUrl } from "../../shared/env";
-interface INewsApi {
-  getNews(): Promise<any>;
-}
+import { isBrowser } from "../helpers/isBrowser";
 
-export class NewsApi implements INewsApi {
+export class NewsApi {
   async getNews() {
-    const response = await axios.get(`${getApiUrl()}`);
+    const response = await axios.get(`${getApiUrl()}/feed`);
     return response.data.cards;
+  }
+
+  async getNewDetail(id: string) {
+    const response = await axios.get(
+      `${getApiUrl()}/users/mock/cards/${id}?metaTags=true`,
+    );
+    return response.data;
   }
 }
