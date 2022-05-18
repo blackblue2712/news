@@ -50,9 +50,12 @@ export class RootStore {
     try {
       this.isLoading = true;
 
+
       const res = yield this.newsApi.getNews();
 
-      this.feed.replace(res.map(item => new FeedModel(item)));
+      const filterFeed = res.filter(feed => !!feed.content);
+
+      this.feed.replace(filterFeed.map(feed => new FeedModel(feed)));
     } finally {
       this.isLoading = false;
     }

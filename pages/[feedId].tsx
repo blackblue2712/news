@@ -4,7 +4,7 @@ import { TheNavbarTop } from 'components/TheNavbarTop/TheNavbarTop'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
-import { RootData, RootStore, useRootStore } from 'stores/RootStore'
+import { RootData, useRootStore } from 'stores/RootStore'
 import { FeedDetail } from '../src/components/FeedDetail/FeedDetail'
 import { isBrowser } from '../src/shared/helpers/isBrowser'
 
