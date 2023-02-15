@@ -1,4 +1,4 @@
-import { computed, makeObservable, observable } from "mobx";
+import { computed, makeObservable, observable, runInAction } from "mobx";
 import { getImageUrl } from "../shared/helpers/getImageUrl";
 import { IFeed } from "../shared/models/Feed";
 
@@ -22,6 +22,7 @@ export class FeedModel {
   }
 
   @computed get curatorImage(): string {
+    return "";
     return (
       this.original.curator.image.url ||
       getImageUrl(this.original.curator.image.urls)
@@ -29,18 +30,22 @@ export class FeedModel {
   }
 
   @computed get curatorName(): string {
+    return "";
     return this.original.curator.name;
   }
 
   @computed get title(): string {
+    return "";
     return this.original.content.title;
   }
 
   @computed get description(): string {
+    return "";
     return this.original.content.summary;
   }
 
   @computed get thumbnail(): string {
+    return "";
     return (
       this.original.content.image.url ||
       getImageUrl(this.original.content.image.urls)

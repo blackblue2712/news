@@ -4,6 +4,7 @@ import { enableStaticRendering } from "mobx-react-lite";
 import { NextRouter } from "next/router";
 import React from "react"
 import { NewsApi } from '../shared/apis/NewsApi';
+import { isBrowser } from "../shared/helpers/isBrowser";
 import { IFeed } from "../shared/models/Feed";
 import { FeedModel } from "./FeedModel";
 import { MetaData, MetaStore } from "./MetaStore";
@@ -17,6 +18,7 @@ enableStaticRendering(typeof window === "undefined");
 
 export type RootData = {
   feedDetail: IFeed | null,
+  feed: Array<IFeed>,
   metaData: MetaData;
 }
 
@@ -37,10 +39,16 @@ export class RootStore {
   }
 
   dehydrate(): RootData {
-    return { feedDetail: this.feedDetail?.toJSON() || null, metaData: this.metaStore.dehydrate(), };
+    return {
+      feedDetail: this.feedDetail?.toJSON() || null,
+      metaData: this.metaStore.dehydrate(),
+      feed: this.feed.map(item => item.toJSON())
+    };
   }
   @action.bound hydrate(data: RootData): void {
     this.metaStore.hydrate(data.metaData);
+    this.feed.replace(data.feed.map(item => new FeedModel(item)));
+
     if (data.feedDetail) {
       this.feedDetail = new FeedModel(data.feedDetail);
     }

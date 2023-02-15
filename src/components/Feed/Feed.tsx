@@ -20,7 +20,8 @@ export const Feed = observer((props: IProps) => {
     const renderFeed = (item: FeedModel) => {
 
         return (
-            <Link href={"[feedId]"} as={`/${item.id}`} passHref>
+
+            <Link key={item.id} href={"[feedId]"} as={`/${item.id}`} passHref>
                 <sc.FeedItem>
                     <sc.Content>
                         <sc.Curator>
