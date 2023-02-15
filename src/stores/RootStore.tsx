@@ -46,6 +46,7 @@ export class RootStore {
     };
   }
   @action.bound hydrate(data: RootData): void {
+    console.log("data", data)
     this.metaStore.hydrate(data.metaData);
     this.feed.replace(data.feed.map(item => new FeedModel(item)));
 

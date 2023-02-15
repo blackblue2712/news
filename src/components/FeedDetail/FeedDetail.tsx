@@ -13,6 +13,8 @@ interface IProps {
 export const FeedDetail = observer((props: IProps) => {
   const driver = props.driver;
 
+  console.log("driver", driver);
+
   const { curatorImage } = driver;
   const { t } = useTranslation("Item")
 
