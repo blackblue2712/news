@@ -4,6 +4,8 @@ import { Provider, RootStore } from '../src/stores/RootStore';
 import Head from 'next/head';
 import { MetaTagsStateful } from '../src/components/MetaTagsStateful/MetaTagsStateful';
 import App from 'next/app'
+import { appWithTranslation } from 'next-i18next';
+import config from "../next-i18next.config"
 
 require("../src/shared/customize-bootstrap.css");
 
@@ -33,4 +35,4 @@ NewsApp.getInitialProps = async (appContext: AppContext) => {
 };
 
 
-export default NewsApp
+export default appWithTranslation(NewsApp, config)
